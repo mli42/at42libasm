@@ -1,41 +1,27 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    ft_strlen.s                                        :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/03/24 13:13:52 by mli               #+#    #+#              #
-#    Updated: 2020/03/25 23:51:28 by mli              ###   ########.fr        #
+#    Created: 2020/03/26 00:24:16 by mli               #+#    #+#              #
+#    Updated: 2020/03/26 00:24:20 by mli              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libasm.a
+	global _ft_strlen
+	section .text
 
-ASMC = nasm
+_ft_strlen:
+	mov		rax, rdi
 
-ASMFLAGS = -f macho64
+ft_strlen_nextchar:
+	cmp		[rax], byte 0
+	je		ft_strlen_end
+	inc		rax
+	jmp		ft_strlen_nextchar
 
-SRCS = hello.s
-
-OBJS = ${SRCS:.s=.o}
-
-${NAME}: ${OBJS}
-	ar rcs ${NAME} ${OBJS}
-
-.s.o:
-	${ASMC} ${ASMFLAGS} $< -o ${<:.s=.o}
-
-all : ${NAME}
-
-clean:
-	rm -rf ${OBJS}
-
-fclean: clean
-	rm -rf ${NAME}
-
-re: fclean all
-
-work: all clean
-
-.PHONY: all clean fclean re work
+ft_strlen_end:
+	sub		rax, rdi
+	ret
