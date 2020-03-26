@@ -1,41 +1,30 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    ft_strcpy.s                                        :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/03/24 13:13:52 by mli               #+#    #+#              #
-#    Updated: 2020/03/26 18:17:48 by mli              ###   ########.fr        #
+#    Created: 2020/03/26 21:02:42 by mli               #+#    #+#              #
+#    Updated: 2020/03/26 23:19:37 by mli              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libasm.a
+	global _ft_strcpy
+	section .text
 
-ASMC = nasm
+_ft_strcpy:
+	mov		rax, rdi
 
-ASMFLAGS = -f macho64
+_ft_str_do_cpy:
+	mov		r8b, [rsi]
+	mov		[rdi], r8b
+	cmp		[rsi], byte 0
+	je		_ft_strcpy_end
+	inc		rdi
+	inc		rsi
+	jmp		_ft_str_do_cpy
 
-SRCS = ft_strlen.s ft_write.s ft_strcpy.s
+_ft_strcpy_end:
+	ret
 
-OBJS = ${SRCS:.s=.o}
-
-${NAME}: ${OBJS}
-	ar rcs ${NAME} ${OBJS}
-
-.s.o:
-	${ASMC} ${ASMFLAGS} $< -o ${<:.s=.o}
-
-all : ${NAME}
-
-clean:
-	rm -rf ${OBJS}
-
-fclean: clean
-	rm -rf ${NAME}
-
-re: fclean all
-
-work: all clean
-
-.PHONY: all clean fclean re work
