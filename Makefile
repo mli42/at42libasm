@@ -6,7 +6,7 @@
 #    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/24 13:13:52 by mli               #+#    #+#              #
-#    Updated: 2020/03/25 23:51:28 by mli              ###   ########.fr        #
+#    Updated: 2020/03/26 13:18:59 by mli              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ ASMC = nasm
 
 ASMFLAGS = -f macho64
 
-SRCS = hello.s
+SRCS = ft_strlen.s ft_write.s
 
 OBJS = ${SRCS:.s=.o}
 
