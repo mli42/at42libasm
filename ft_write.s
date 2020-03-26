@@ -2,11 +2,13 @@
 		section .text
 
 _ft_write:
-		mov		r8, -1
+		push	rcx
 		push	rdx
 		mov		rax, 0x02000004
 		syscall
 		pop		rdx
+		mov		rcx, -1
 		cmp		rax, rdx
-		cmovne	rax, r8
+		cmovne	rax, rcx
+		pop		rcx
 		ret
