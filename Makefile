@@ -6,7 +6,7 @@
 #    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/24 13:13:52 by mli               #+#    #+#              #
-#    Updated: 2020/03/27 23:04:37 by mli              ###   ########.fr        #
+#    Updated: 2020/03/27 23:20:13 by mli              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,12 +20,13 @@ SRCS = ft_strlen.s ft_write.s ft_strcpy.s ft_strcmp.s ft_read.s ft_strdup.s
 SRCS_BONUS = ft_list_size_bonus.s ft_list_push_front_bonus.s
 
 OBJS = ${SRCS:.s=.o}
+OBJS_BONUS = ${SRCS_BONUS:.s=.o}
 
 ${NAME}: ${OBJS}
 	ar rcs ${NAME} ${OBJS}
 
-bonus: ${OBJS} ${SRCS_BONUS}
-	ar rcs ${NAME} ${OBJS} ${SRCS_BONUS}
+bonus: ${OBJS} ${OBJS_BONUS}
+	ar rcs ${NAME} ${OBJS} ${OBJS_BONUS}
 
 .s.o:
 	${ASMC} ${ASMFLAGS} $< -o ${<:.s=.o}
@@ -33,7 +34,7 @@ bonus: ${OBJS} ${SRCS_BONUS}
 all : ${NAME}
 
 clean:
-	rm -rf ${OBJS} ${SRCS_BONUS}
+	rm -rf ${OBJS} ${OBJS_BONUS}
 
 fclean: clean
 	rm -rf ${NAME}
