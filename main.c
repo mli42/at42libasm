@@ -6,11 +6,10 @@
 /*   By: mli <mli@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 21:00:58 by mli               #+#    #+#             */
-/*   Updated: 2020/03/27 14:32:45 by mli              ###   ########.fr       */
+/*   Updated: 2020/03/27 16:02:42 by mli              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <inttypes.h>
 #include "libasm.h"
 int		ft_printf(const char *str, ...);
 
@@ -35,6 +34,15 @@ void	ft_test_strcmp(char *s1, char *s2)
 	ft_printf("True %d\n", strcmp(s1, s2));
 }
 
+void	ft_test_read(int fd, int count)
+{
+	char buff[1024];
+
+	memset(buff, 0, 1024);
+	ft_printf("%d\n", ft_read(fd, buff, count));
+	ft_printf("%s\n", buff);
+}
+
 int		main(void)
 {
 //	ft_wr_len("123");
@@ -48,6 +56,7 @@ int		main(void)
 //	ft_test_strcmp("", "");
 //	ft_test_strcmp("12349", "12346");
 
+//	ft_test_read(open("main.c", O_RDONLY), 5);
 
 	return (0);
 }

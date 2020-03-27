@@ -6,7 +6,7 @@
 /*   By: mli <mli@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/26 13:06:31 by mli               #+#    #+#             */
-/*   Updated: 2020/03/26 13:17:44 by mli              ###   ########.fr       */
+/*   Updated: 2020/03/27 16:02:23 by mli              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include <string.h>
+# include <fcntl.h>
 
 size_t		ft_strlen(const char *s);
 char		*ft_strcpy(char *dst, const char *src);

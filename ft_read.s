@@ -1,41 +1,27 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    ft_read.s                                          :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/03/24 13:13:52 by mli               #+#    #+#              #
-#    Updated: 2020/03/27 14:36:28 by mli              ###   ########.fr        #
+#    Created: 2020/03/27 16:01:12 by mli               #+#    #+#              #
+#    Updated: 2020/03/27 16:01:44 by mli              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libasm.a
+		global _ft_read
+		section .text
 
-ASMC = nasm
+_ft_read:
+		push	rdx
+		mov		rax, 0x02000003
+		syscall
+		pop		rdx
+		cmp		rax, rdx
+		jne		_ft_read_error
+		ret
 
-ASMFLAGS = -f macho64
-
-SRCS = ft_strlen.s ft_write.s ft_strcpy.s ft_strcmp.s ft_read.s
-
-OBJS = ${SRCS:.s=.o}
-
-${NAME}: ${OBJS}
-	ar rcs ${NAME} ${OBJS}
-
-.s.o:
-	${ASMC} ${ASMFLAGS} $< -o ${<:.s=.o}
-
-all : ${NAME}
-
-clean:
-	rm -rf ${OBJS}
-
-fclean: clean
-	rm -rf ${NAME}
-
-re: fclean all
-
-work: all clean
-
-.PHONY: all clean fclean re work
+_ft_read_error:
+		mov		rax, -1
+		ret
