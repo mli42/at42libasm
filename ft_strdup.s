@@ -1,41 +1,27 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    ft_strdup.s                                        :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/03/24 13:13:52 by mli               #+#    #+#              #
-#    Updated: 2020/03/27 18:34:29 by mli              ###   ########.fr        #
+#    Created: 2020/03/27 18:44:49 by mli               #+#    #+#              #
+#    Updated: 2020/03/27 18:44:52 by mli              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libasm.a
+extern _ft_strlen
+extern _ft_strcpy
+extern _malloc
 
-ASMC = nasm
+		global _ft_strdup
 
-ASMFLAGS = -f macho64
-
-SRCS = ft_strlen.s ft_write.s ft_strcpy.s ft_strcmp.s ft_read.s ft_strdup.s
-
-OBJS = ${SRCS:.s=.o}
-
-${NAME}: ${OBJS}
-	ar rcs ${NAME} ${OBJS}
-
-.s.o:
-	${ASMC} ${ASMFLAGS} $< -o ${<:.s=.o}
-
-all : ${NAME}
-
-clean:
-	rm -rf ${OBJS}
-
-fclean: clean
-	rm -rf ${NAME}
-
-re: fclean all
-
-work: all clean
-
-.PHONY: all clean fclean re work
+_ft_strdup:
+	push	rdi
+	call	_ft_strlen
+	mov		rdi, rax
+	call	_malloc
+	mov		rdi, rax
+	pop		rsi
+	call	_ft_strcpy
+	ret

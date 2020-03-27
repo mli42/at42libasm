@@ -6,7 +6,7 @@
 /*   By: mli <mli@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/24 21:00:58 by mli               #+#    #+#             */
-/*   Updated: 2020/03/27 16:02:42 by mli              ###   ########.fr       */
+/*   Updated: 2020/03/27 18:44:02 by mli              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ void	ft_test_read(int fd, int count)
 	ft_printf("%s\n", buff);
 }
 
+void	ft_test_strdup(char *s1)
+{
+	ft_printf("%s\n%s\n", s1, ft_strdup(s1));
+}
+
 int		main(void)
 {
 //	ft_wr_len("123");
@@ -57,6 +62,8 @@ int		main(void)
 //	ft_test_strcmp("12349", "12346");
 
 //	ft_test_read(open("main.c", O_RDONLY), 5);
+
+//	ft_test_strdup("123456789ABCDEF");
 
 	return (0);
 }
