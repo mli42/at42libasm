@@ -6,7 +6,7 @@
 #    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/24 13:13:52 by mli               #+#    #+#              #
-#    Updated: 2020/03/27 23:20:13 by mli              ###   ########.fr        #
+#    Updated: 2020/06/02 16:30:13 by mli              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,22 +19,26 @@ ASMFLAGS = -f macho64
 SRCS = ft_strlen.s ft_write.s ft_strcpy.s ft_strcmp.s ft_read.s ft_strdup.s
 SRCS_BONUS = ft_list_size_bonus.s ft_list_push_front_bonus.s
 
-OBJS = ${SRCS:.s=.o}
-OBJS_BONUS = ${SRCS_BONUS:.s=.o}
+OBJ_PATH = ./obj/
+OBJS = ${addprefix ${OBJ_PATH}, ${SRCS:.s=.o}}
+OBJS_BONUS = ${addprefix ${OBJ_PATH}, ${SRCS_BONUS:.s=.o}}
 
-${NAME}: ${OBJS}
+${NAME}: ${OBJ_PATH} ${OBJS}
 	ar rcs ${NAME} ${OBJS}
 
-bonus: ${OBJS} ${OBJS_BONUS}
+bonus: ${OBJ_PATH} ${OBJS} ${OBJS_BONUS}
 	ar rcs ${NAME} ${OBJS} ${OBJS_BONUS}
 
-.s.o:
-	${ASMC} ${ASMFLAGS} $< -o ${<:.s=.o}
+${OBJ_PATH}:
+	mkdir -p ${OBJ_PATH}
+
+${OBJ_PATH}%.o:%.s
+	${ASMC} ${ASMFLAGS} $< -o $@
 
 all : ${NAME}
 
 clean:
-	rm -rf ${OBJS} ${OBJS_BONUS}
+	rm -rf ${OBJ_PATH}
 
 fclean: clean
 	rm -rf ${NAME}
