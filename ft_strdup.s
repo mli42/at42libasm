@@ -6,7 +6,7 @@
 #    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/27 18:44:49 by mli               #+#    #+#              #
-#    Updated: 2020/06/03 01:53:31 by mli              ###   ########.fr        #
+#    Updated: 2020/06/07 19:08:32 by mli              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,15 +25,18 @@ _ft_strdup:
 	mov		rdi, rax
 	inc		rdi			; len = ft_strlen(s1) + 1
 	call	_malloc		; rax = malloc(ft_strlen(src) + 1)
-	jc		exit_error
+	pop		rsi
+
+	cmp		rax, 0		; malloc protection
+	je		exit_error
 
 	mov		rdi, rax
-	pop		rsi
 	call	_ft_strcpy	; ft_strcpy(dest, src)
 	ret
 
 exit_error:
+		push	rax		; crash if I do 'mov rax, 0'
 		call	___error
 		mov		QWORD [rax], 12
-		mov		rax, 0
+		pop		rax
 		ret
