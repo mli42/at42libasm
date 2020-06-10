@@ -6,7 +6,7 @@
 #    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/26 21:02:42 by mli               #+#    #+#              #
-#    Updated: 2020/03/26 23:19:37 by mli              ###   ########.fr        #
+#    Updated: 2020/06/11 00:06:32 by mli              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,17 +14,15 @@
 	section .text
 
 _ft_strcpy:
-	mov		rax, rdi
+	push	rdi
 
-_ft_str_do_cpy:
-	mov		r8b, [rsi]
-	mov		[rdi], r8b
-	cmp		[rsi], byte 0
-	je		_ft_strcpy_end
-	inc		rdi
-	inc		rsi
-	jmp		_ft_str_do_cpy
+ft_str_do_cpy:
+	movsb
+	cmp		[rsi - 1], byte 0
+	je		ft_strcpy_end
+	jmp		ft_str_do_cpy
 
-_ft_strcpy_end:
+ft_strcpy_end:
+	pop		rax
 	ret
 
