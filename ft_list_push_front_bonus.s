@@ -6,11 +6,12 @@
 #    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/27 22:26:34 by mli               #+#    #+#              #
-#    Updated: 2020/06/27 22:26:09 by mli              ###   ########.fr        #
+#    Updated: 2020/06/27 22:52:06 by mli              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 extern	_malloc
+extern	___error
 
 		global	_ft_list_push_front
 		section	.text
@@ -22,7 +23,7 @@ _ft_list_push_front:
 		mov		rdi, 16			; int size = sizeof(t_list) == 16;
 		call	_malloc			; rax = malloc(size);
 		cmp		rax, 0			; if (rax == NULL) -> return ;
-		jz		_ft_list_push_front_end
+		jz		exit_error
 
 		pop		rsi				; pop data
 		pop		rdi				; pop begin
