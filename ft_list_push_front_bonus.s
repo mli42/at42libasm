@@ -6,7 +6,7 @@
 #    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/27 22:26:34 by mli               #+#    #+#              #
-#    Updated: 2020/03/27 23:01:41 by mli              ###   ########.fr        #
+#    Updated: 2020/06/27 22:26:09 by mli              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,11 @@ _ft_list_push_front:
 		mov		[rax + 8], rsi	; lstnew->next = *begin
 
 		mov		[rdi], rax		; *begin = lstnew
+		ret
 
-_ft_list_push_front_end:
+exit_error:
+		push	rax				; crash if I do 'mov rax, 0'
+		call	___error
+		mov		QWORD [rax], 12
+		pop		rax
 		ret
