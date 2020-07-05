@@ -3,6 +3,11 @@
 
 	; is_white_space according to `man isspace` (+) {+/-}
 ft_is_forbidden_char_rdx:
+	cmp [rdx], byte 43 ; +
+	je	retone
+	cmp [rdx], byte 45 ; -
+	je	retone
+ft_is_whitespace:
 	cmp [rdx], byte 9 ; \t
 	je	retone
 	cmp [rdx], byte 10;	\n
@@ -14,10 +19,6 @@ ft_is_forbidden_char_rdx:
 	cmp [rdx], byte 13;	\r
 	je	retone
 	cmp [rdx], byte 32;	sp
-	je	retone
-	cmp [rdx], byte 43 ; +
-	je	retone
-	cmp [rdx], byte 45 ; -
 	je	retone
 	jmp retzero
 
