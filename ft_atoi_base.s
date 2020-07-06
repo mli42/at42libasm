@@ -28,7 +28,7 @@ ft_strichr:
 	mov	rax, -1
 ft_strichr_loop:
 	inc	rax
-	cmp [rdi + rax], rsi
+	cmp	[rdi + rax], rsi
 	je	return
 	cmp	[rdi + rax], byte 0
 	jne	ft_strichr_loop
@@ -58,7 +58,7 @@ ft_no_forbidden_c:
 	cmp	[rdx], byte 0
 	jne	ft_no_forbidden_c
 
-	retone
+	jmp	retone
 
 ; rdi = str || rsi = base
 _ft_atoi_base:
