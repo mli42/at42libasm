@@ -22,8 +22,20 @@ ft_is_whitespace:
 	je	retone
 	jmp retzero
 
-; rdi = str || rsi = base
-_ft_atoi_base:
+	; ret the index of the char searched in the string, -1 if not here
+	; rdi = str, rsi = c
+ft_strichr:
+	mov	rax, -1
+ft_strichr_loop:
+	inc	rax
+	cmp [rdi + rax], rsi
+	je	return
+	cmp	[rdi + rax], byte 0
+	jne	ft_strichr_loop
+	mov	rax, -1
+	jmp	return
+return:
+	ret
 
 ft_base_check:
 	; No char to convert so res = 0
@@ -46,6 +58,19 @@ ft_no_forbidden_c:
 	cmp	[rdx], byte 0
 	jne	ft_no_forbidden_c
 
+	retone
+
+; rdi = str || rsi = base
+_ft_atoi_base:
+	push rdi
+	push rsi
+	call ft_base_check
+	pop	rsi
+	pop	rdi
+
+	cmp	rax, 0
+	jz	retzero
+
 	mov rax, 42
 	ret
 
@@ -56,4 +81,8 @@ error_exit:
 
 retone:
 	mov rax, 1
+	ret
+
+retminus_one:
+	mov rax, -1
 	ret
