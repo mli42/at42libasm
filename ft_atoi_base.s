@@ -1,6 +1,24 @@
 	global _ft_atoi_base
 	section .text
 
+	extern _ft_strlen
+
+	; r8 = x, r9 = exponent
+	; restore r9 but minus one
+_ft_power_atoi_base:
+	mov rax, 1
+	push r9
+ft_power_loop:
+	cmp r9, 0
+	jle	ft_power_end
+	dec r9
+	imul rax, r8
+	jmp	ft_power_loop
+ft_power_end:
+	pop r9
+	dec r9
+	ret
+
 	; is_white_space according to `man isspace` (+) {+/-}
 ft_is_forbidden_char:
 	call ft_is_sign
@@ -78,6 +96,12 @@ ft_no_same_c:
 	jne	retzero		; the char is here twice
 	jmp	ft_no_same_c
 
+ft_swap:
+	push rdi
+	mov rdi, rsi
+	pop rsi
+	ret
+
 ; rdi = str || rsi = base
 _ft_atoi_base:
 	push rdi
@@ -88,6 +112,13 @@ _ft_atoi_base:
 
 	cmp	rax, 0
 	jz	retzero
+
+	; r8 = ft_strlen(base);
+	push rdi
+	mov rdi, rsi
+	call _ft_strlen
+	mov r8, rax
+	pop rdi
 
 	dec rdi
 skip_whsp:
@@ -109,6 +140,24 @@ skip_signs:
 skip_signs_not_neg:
 	jmp	skip_signs		; to delete if do not want a loop for '+-+--+' things
 end_skip_signs:
+
+	; r9 = nbrlen_base
+	push rdi
+	push rsi
+	mov rdx, rdi
+	mov r9, rdi
+	mov rdi, rsi
+	dec rdx
+nbrlen_loop:
+	inc rdx
+	movzx rsi, byte [rdx]
+	call _ft_strichr
+	cmp	rax, -1
+	jne	nbrlen_loop
+	sub r9, rdx
+	neg r9
+	pop rsi
+	pop rdi
 
 	mov rax, 42 ; tmp
 
