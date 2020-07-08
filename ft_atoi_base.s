@@ -3,10 +3,16 @@
 
 	; is_white_space according to `man isspace` (+) {+/-}
 ft_is_forbidden_char:
+	call ft_is_sign
+	cmp	rax, 1
+	je	return
+	jmp	ft_is_whitespace
+ft_is_sign:
 	cmp [rdi], byte 43 ; +
 	je	retone
 	cmp [rdi], byte 45 ; -
 	je	retone
+	jmp	retzero
 ft_is_whitespace:
 	cmp [rdi], byte 9 ; \t
 	je	retone
@@ -83,7 +89,34 @@ _ft_atoi_base:
 	cmp	rax, 0
 	jz	retzero
 
-	mov rax, 42
+	dec rdi
+skip_whsp:
+	inc rdi
+	call ft_is_whitespace
+	cmp	rax, 1
+	je	skip_whsp
+
+	dec rdi
+	mov r10, 1
+skip_signs:
+	inc rdi
+	call ft_is_sign
+	cmp	rax, 1
+	jne	end_skip_signs
+	cmp [rdi], byte 45 ; str[i] == '-' ?
+	jne	skip_signs_not_neg
+	neg	r10
+skip_signs_not_neg:
+	jmp	skip_signs		; to delete if do not want a loop for '+-+--+' things
+end_skip_signs:
+
+	mov rax, 42 ; tmp
+
+	cmp r10, 1
+	je	not_neg
+	neg rax
+not_neg:
+
 	ret
 
 retzero:
