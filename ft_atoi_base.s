@@ -60,7 +60,17 @@ ft_no_forbidden_c:
 	cmp	[rdx], byte 0
 	jne	ft_no_forbidden_c
 
-	jmp	retone
+	; rdi = base + i + 1, rsi = base[i]
+	mov rdi, rsi
+ft_no_same_c:
+	cmp [rdi + 1], byte 0
+	jz	retone		; check is finished
+	movzx	rsi, byte [rdi]
+	inc	rdi
+	call _ft_strichr
+	cmp rax, byte -1
+	jne	retzero		; the char is here twice
+	jmp	ft_no_same_c
 
 ; rdi = str || rsi = base
 _ft_atoi_base:
