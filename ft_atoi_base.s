@@ -24,16 +24,18 @@ ft_is_whitespace:
 
 	; ret the index of the char searched in the string, -1 if not here
 	; rdi = str, rsi = c
-ft_strichr:
-	mov	rax, -1
+_ft_strichr:
+	xor rax, rax
 ft_strichr_loop:
-	inc	rax
-	cmp	[rdi + rax], rsi
+	movzx r10, byte [rdi + rax]
+
+	cmp	r10, rsi
 	je	return
-	cmp	[rdi + rax], byte 0
-	jne	ft_strichr_loop
-	mov	rax, -1
-	jmp	return
+	cmp	r10, byte 0
+	je	retminus_one
+	inc	rax
+	jmp	ft_strichr_loop
+
 return:
 	ret
 
