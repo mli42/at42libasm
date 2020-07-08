@@ -2,23 +2,23 @@
 	section .text
 
 	; is_white_space according to `man isspace` (+) {+/-}
-ft_is_forbidden_char_rdx:
-	cmp [rdx], byte 43 ; +
+ft_is_forbidden_char:
+	cmp [rdi], byte 43 ; +
 	je	retone
-	cmp [rdx], byte 45 ; -
+	cmp [rdi], byte 45 ; -
 	je	retone
 ft_is_whitespace:
-	cmp [rdx], byte 9 ; \t
+	cmp [rdi], byte 9 ; \t
 	je	retone
-	cmp [rdx], byte 10;	\n
+	cmp [rdi], byte 10;	\n
 	je	retone
-	cmp [rdx], byte 11;	\v
+	cmp [rdi], byte 11;	\v
 	je	retone
-	cmp [rdx], byte 12;	\f
+	cmp [rdi], byte 12;	\f
 	je	retone
-	cmp [rdx], byte 13;	\r
+	cmp [rdi], byte 13;	\r
 	je	retone
-	cmp [rdx], byte 32;	sp
+	cmp [rdi], byte 32;	sp
 	je	retone
 	jmp retzero
 
@@ -50,14 +50,14 @@ ft_base_check:
 	jz	error_exit
 
 	; Check if contains white spaces (+) {+/-}
-	mov rdx, rsi
+	mov rdi, rsi
 ft_no_forbidden_c:
-	call ft_is_forbidden_char_rdx
+	call ft_is_forbidden_char
 	cmp rax, 1
 	je	error_exit
 
-	inc	rdx
-	cmp	[rdx], byte 0
+	inc	rdi
+	cmp	[rdi], byte 0
 	jne	ft_no_forbidden_c
 
 	; rdi = base + i + 1, rsi = base[i]
