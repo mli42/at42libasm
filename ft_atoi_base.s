@@ -53,10 +53,10 @@ _ft_strichr:
 ft_strichr_loop:
 	movzx r10, byte [rdi + rax]
 
-	cmp	r10, rsi
-	je	return
 	cmp	r10, byte 0
 	je	retminus_one
+	cmp	r10, rsi
+	je	return
 	inc	rax
 	jmp	ft_strichr_loop
 
@@ -140,13 +140,14 @@ skip_signs:
 skip_signs_not_neg:
 	jmp	skip_signs		; to delete if do not want a loop for '+-+--+' things
 end_skip_signs:
+	push r10 ; Push tmp register because it might change idk why
 
-	; r9 = nbrlen_base
-	push rdi
-	push rsi
+	; rdi = base, rsi = str[i], rdx = str
 	mov rdx, rdi
 	mov r9, rdi
 	mov rdi, rsi
+	; r9 = nbrlen_base - 1
+	push rdx
 	dec rdx
 nbrlen_loop:
 	inc rdx
@@ -156,16 +157,34 @@ nbrlen_loop:
 	jne	nbrlen_loop
 	sub r9, rdx
 	neg r9
-	pop rsi
-	pop rdi
+	dec r9
+	pop rdx
 
-	mov rax, 42 ; tmp
+	push r12 ; Use r11 is dangerous, thus I save and use r12
+	; r12 = atoi_base(str, base)
+	xor r12, r12
+	dec rdx
+ft_atoi_base_loop:
+	inc rdx
+	cmp r9, byte 0
+	jl	ft_atoi_base_end
+	movzx rsi, byte [rdx]
+	call _ft_strichr
+	mov rcx, rax
+	call _ft_power_atoi_base
+	imul rax, rcx
+	add r12, rax
+	jmp	ft_atoi_base_loop
+
+ft_atoi_base_end:
+	mov rax, r12
+	pop r12
+	pop r10
 
 	cmp r10, 1
 	je	not_neg
 	neg rax
 not_neg:
-
 	ret
 
 retzero:
