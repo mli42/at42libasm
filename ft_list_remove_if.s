@@ -32,6 +32,37 @@ ft_remove_first_one:
 
 	ret
 
+ft_remove_one_other:
+	mov	rdi, [rdx + 8]	; rdi = current->next
+	push rdi
+	mov	rdi, [rdi]	; rdi = current->next->data
+
+	push rdx
+	push rcx
+	push r8
+	push r9
+	call r9			; (*free_fct)(current->next->data)
+	pop r9
+	pop r8
+	pop rcx
+	pop rdx
+
+	pop rdi ; rdi = current->next
+	mov	rsi, QWORD [rdi + 8]; rsi = current->next->next;
+	mov [rdx + 8], rsi		; current->next = current->next->next
+
+	push rdx
+	push rcx
+	push r8
+	push r9
+	call _free			; free(current->next)
+	pop r9
+	pop r8
+	pop rcx
+	pop rdx
+
+	ret
+
 _ft_list_remove_if:
 	; rdi/rsi = empty so I can call without push too much
 	; rdx = **lst, rcx = data_ref, r8 = (*cmp)(), r9 = (*free_fct)()
@@ -63,5 +94,37 @@ delete_first_loop:
 	jmp	delete_first_loop
 delete_first_loop_end:
 
+	; Remove other middle link
+	mov	rdx, [rdx] ; current = *begin_lst;
+delete_other_loop:
+	cmp	rdx, 0		; while (current != NULL)
+	je	delete_other_loop_end
+	mov	rdi, QWORD [rdx + 8]	; rdi = current->next
+	cmp rdi, 0
+	je	delete_other_loop_inc
+	mov	rdi, [rdi] ; rdi = current->next->data
+	mov	rsi, rcx	; rsi = data_ref
+
+	push rdx
+	push rcx
+	push r8
+	push r9			; (*cmp)(current->next->data, data_ref);
+	call r8
+	pop r9
+	pop r8
+	pop rcx
+	pop rdx
+
+	cmp rax, 0
+	jne	delete_other_loop_inc
+	call ft_remove_one_other
+	jmp	delete_other_loop
+delete_other_loop_end:
+
 return:
 	ret
+
+delete_other_loop_inc:
+	mov rdx, [rdx + 8] ; current = current->next;
+	mov	rdi, rdx
+	jmp	delete_other_loop
