@@ -6,7 +6,7 @@
 #    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/24 13:13:52 by mli               #+#    #+#              #
-#    Updated: 2020/07/08 21:47:57 by mli              ###   ########.fr        #
+#    Updated: 2020/07/09 15:29:48 by mli              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ ASMFLAGS = -f macho64
 
 SRCS = ft_strlen.s ft_write.s ft_strcpy.s ft_strcmp.s ft_read.s ft_strdup.s
 SRCS_BONUS = ft_list_size_bonus.s ft_list_push_front_bonus.s ft_atoi_base.s \
-			 ft_list_remove_if.s
+			 ft_list_remove_if.s ft_list_sort.s
 
 OBJ_PATH = ./obj/
 OBJS = ${addprefix ${OBJ_PATH}, ${SRCS:.s=.o}}
