@@ -6,13 +6,13 @@
 #    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/14 11:37:01 by mli               #+#    #+#              #
-#    Updated: 2020/09/14 11:37:44 by mli              ###   ########.fr        #
+#    Updated: 2020/09/14 13:39:37 by mli              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 	global ft_list_remove_if
 	section .text
-extern __free
+extern free
 
 ft_remove_first_one:
 	mov	rdi, [rdx]	; rdi = *lst
@@ -36,7 +36,7 @@ ft_remove_first_one:
 	push rcx
 	push r8
 	push r9
-	call __free			; _free(*lst)
+	call free			; _free(*lst)
 	pop r9
 	pop r8
 	pop rcx
@@ -67,7 +67,7 @@ ft_remove_one_other:
 	push rcx
 	push r8
 	push r9
-	call __free			; _free(current->next)
+	call free			; _free(current->next)
 	pop r9
 	pop r8
 	pop rcx

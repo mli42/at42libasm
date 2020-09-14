@@ -1,16 +1,16 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    ft_list_push_front_bonus.s                         :+:      :+:    :+:    #
+#    ft_list_push_front.s                               :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/03/27 22:26:34 by mli               #+#    #+#              #
-#    Updated: 2020/06/27 22:52:06 by mli              ###   ########.fr        #
+#    Updated: 2020/09/14 13:39:25 by mli              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-extern	__malloc
+extern	malloc
 extern	__errno_location
 
 		global	ft_list_push_front
@@ -21,7 +21,7 @@ ft_list_push_front:
 		push	rsi				; push data
 
 		mov		rdi, 16			; int size = sizeof(t_list) == 16;
-		call	__malloc			; rax = _malloc(size);
+		call	malloc			; rax = _malloc(size);
 		cmp		rax, 0			; if (rax == NULL) -> return ;
 		jz		exit_error
 
