@@ -1,29 +1,27 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    ft_read.s                                          :+:      :+:    :+:    #
+#    ft_list_size.s                                     :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/03/27 16:01:12 by mli               #+#    #+#              #
-#    Updated: 2020/09/14 11:55:51 by mli              ###   ########.fr        #
+#    Created: 2020/09/14 11:37:48 by mli               #+#    #+#              #
+#    Updated: 2020/09/14 11:37:56 by mli              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-		global ft_read
-		extern __errno_location
-		section .text
+	global	ft_list_size
+	section	.text
 
-ft_read:
-		mov		rax, 0
-		syscall
-		cmp		rax, 0
-		jl		exit_error
-		ret
-exit_error:
-		neg		rax
-		push	rax
-		call	__errno_location
-		pop		QWORD [rax]
-		mov		rax, -1
+ft_list_size:
+		xor		rax, rax		; count = 0;
+
+_ft_lstsize_count:
+		cmp		rdi, 0			; lst == NULL ? return : count;
+		je		_ft_lstsize_end
+		mov		rdi, [rdi + 8]	; lst = lst->next;
+		inc		rax				; count++;
+		jmp		_ft_lstsize_count
+
+_ft_lstsize_end:
 		ret

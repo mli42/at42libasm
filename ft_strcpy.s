@@ -10,10 +10,10 @@
 #                                                                              #
 # **************************************************************************** #
 
-	global _ft_strcpy
+	global ft_strcpy
 	section .text
 
-_ft_strcpy:
+ft_strcpy:
 	push	rdi
 
 ft_str_do_cpy:

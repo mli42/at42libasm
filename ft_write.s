@@ -1,15 +1,29 @@
-		global _ft_write
-		extern ___error
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    ft_write.s                                         :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/09/14 11:40:27 by mli               #+#    #+#              #
+#    Updated: 2020/09/14 11:55:24 by mli              ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+		global ft_write
+		extern __errno_location
 		section .text
 
-_ft_write:
-		mov		rax, 0x02000004
+ft_write:
+		mov		rax, 1
 		syscall
-		jc		exit_error
+		cmp		rax, 0
+		jl		exit_error
 		ret
 exit_error:
+		neg		rax
 		push	rax
-		call	___error
+		call	__errno_location
 		pop		QWORD [rax]
 		mov		rax, -1
 		ret

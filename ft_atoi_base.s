@@ -1,7 +1,19 @@
-	global _ft_atoi_base
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    ft_atoi_base.s                                     :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/09/14 11:33:12 by mli               #+#    #+#              #
+#    Updated: 2020/09/14 11:34:39 by mli              ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+	global ft_atoi_base
 	section .text
 
-	extern _ft_strlen
+	extern ft_strlen
 
 	; r8 = x, r9 = exponent
 	; restore r9 but minus one
@@ -103,7 +115,7 @@ ft_swap:
 	ret
 
 ; rdi = str || rsi = base
-_ft_atoi_base:
+ft_atoi_base:
 	push rdi
 	push rsi
 	call ft_base_check
@@ -116,7 +128,7 @@ _ft_atoi_base:
 	; r8 = ft_strlen(base);
 	push rdi
 	mov rdi, rsi
-	call _ft_strlen
+	call ft_strlen
 	mov r8, rax
 	pop rdi
 

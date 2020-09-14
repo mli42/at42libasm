@@ -1,6 +1,18 @@
-	global _ft_list_remove_if
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    ft_list_remove_if.s                                :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/09/14 11:37:01 by mli               #+#    #+#              #
+#    Updated: 2020/09/14 11:37:44 by mli              ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+	global ft_list_remove_if
 	section .text
-extern _free
+extern __free
 
 ft_remove_first_one:
 	mov	rdi, [rdx]	; rdi = *lst
@@ -10,7 +22,7 @@ ft_remove_first_one:
 	push rcx
 	push r8
 	push r9
-	call r9			; (*free_fct)(*lst->data)
+	call r9			; (*_free_fct)(*lst->data)
 	pop r9
 	pop r8
 	pop rcx
@@ -24,7 +36,7 @@ ft_remove_first_one:
 	push rcx
 	push r8
 	push r9
-	call _free			; free(*lst)
+	call __free			; _free(*lst)
 	pop r9
 	pop r8
 	pop rcx
@@ -41,7 +53,7 @@ ft_remove_one_other:
 	push rcx
 	push r8
 	push r9
-	call r9			; (*free_fct)(current->next->data)
+	call r9			; (*_free_fct)(current->next->data)
 	pop r9
 	pop r8
 	pop rcx
@@ -55,7 +67,7 @@ ft_remove_one_other:
 	push rcx
 	push r8
 	push r9
-	call _free			; free(current->next)
+	call __free			; _free(current->next)
 	pop r9
 	pop r8
 	pop rcx
@@ -63,9 +75,9 @@ ft_remove_one_other:
 
 	ret
 
-_ft_list_remove_if:
+ft_list_remove_if:
 	; rdi/rsi = empty so I can call without push too much
-	; rdx = **lst, rcx = data_ref, r8 = (*cmp)(), r9 = (*free_fct)()
+	; rdx = **lst, rcx = data_ref, r8 = (*cmp)(), r9 = (*_free_fct)()
 	mov r9, rcx
 	mov r8, rdx
 	mov rcx, rsi

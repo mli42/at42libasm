@@ -1,14 +1,26 @@
-	global _ft_list_sort
-	section .text
-extern _ft_list_size
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    ft_list_sort.s                                     :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/09/14 11:37:59 by mli               #+#    #+#              #
+#    Updated: 2020/09/14 11:42:42 by mli              ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-_ft_list_sort:
+	global ft_list_sort
+	section .text
+extern ft_list_size
+
+ft_list_sort:
 	; rdi/rsi = empty so I can call without push too much
 	; rdx = **lst, rcx = (*cmp)(), r8 = lstsize
 	push rsi
 	push rdi
 	mov	rdi, [rdi]	; rdi = *lst
-	call _ft_list_size ; list_size(*lst);
+	call ft_list_size ; list_size(*lst);
 	mov r8, rax ; r8 = listsize
 	pop rdx ; rdx = rdi == t_list **lst
 	pop rcx ; rcx = rsi == (*cmp)()

@@ -10,18 +10,18 @@
 #                                                                              #
 # **************************************************************************** #
 
-extern	_malloc
-extern	___error
+extern	__malloc
+extern	__errno_location
 
-		global	_ft_list_push_front
+		global	ft_list_push_front
 		section	.text
 
-_ft_list_push_front:
+ft_list_push_front:
 		push	rdi				; push begin
 		push	rsi				; push data
 
 		mov		rdi, 16			; int size = sizeof(t_list) == 16;
-		call	_malloc			; rax = malloc(size);
+		call	__malloc			; rax = _malloc(size);
 		cmp		rax, 0			; if (rax == NULL) -> return ;
 		jz		exit_error
 
@@ -37,7 +37,7 @@ _ft_list_push_front:
 
 exit_error:
 		push	rax				; crash if I do 'mov rax, 0'
-		call	___error
+		call	__errno_location
 		mov		QWORD [rax], 12
 		pop		rax
 		ret

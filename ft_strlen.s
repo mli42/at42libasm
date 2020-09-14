@@ -5,15 +5,15 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mli <mli@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/03/26 00:24:16 by mli               #+#    #+#              #
-#    Updated: 2020/03/26 00:24:20 by mli              ###   ########.fr        #
+#    Created: 2020/09/14 11:41:49 by mli               #+#    #+#              #
+#    Updated: 2020/09/14 11:41:51 by mli              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-	global _ft_strlen
+	global ft_strlen
 	section .text
 
-_ft_strlen:
+ft_strlen:
 	mov		rax, rdi
 
 ft_strlen_nextchar:
